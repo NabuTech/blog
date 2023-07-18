@@ -1,18 +1,17 @@
-import React from 'react';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import './index.css';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import BlogPostPage from "./pages/BlogPostPage";
 
 const App = () => {
   return (
-    <div className="app">
-      <Header />
-      <main className='content'>
-        {/* Main Content */}
-      </main>
-      <Footer />
-      {/* Other components and content */}
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/blog/:postId" element={<BlogPostPage />} />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </Router>
   );
 };
 

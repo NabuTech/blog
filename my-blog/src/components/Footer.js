@@ -7,7 +7,7 @@ const Footer = () => {
             <div className="footer-content">
                 <div className="about-section">
                     <div className="logo-container">
-                        <span class="logo" alt="logo">NabuTech</span>
+                        <span className="logo" alt="logo">NabuTech</span>
                     </div>
                     <p> About Nabutech Section blah blah blah</p>
                 </div>
