@@ -9,10 +9,11 @@ const BlogCard = ({ post }) => {
     <div className="blog-card">
       <p className="blog-card-date">{formattedDate}</p>
       <span className="blog-card-title">{post.title}</span>
-      <p className="blog-card-content">A Sample Blog</p>
+      <p className="blog-card-description">{post.description}</p>
       <Link to={`/blog/${post.id}`}>Read More</Link>
     </div>
   );
 };
 
 export default BlogCard;
+
