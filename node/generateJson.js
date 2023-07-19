@@ -9,7 +9,7 @@ const readMarkdownFiles = (folderPath) => {
   files.forEach((file, index) => {
     const filePath = `${folderPath}/${file}`;
     const fileContent = fs.readFileSync(filePath, 'utf-8');
-    const { data, content } = matter(fileContent);
+    const { data, content, description } = matter(fileContent);
 
     console.log(`file: ${file}`);
     console.log('---');
@@ -21,6 +21,7 @@ const readMarkdownFiles = (folderPath) => {
       id: index + 1, // Assign a unique ID to each blog post
       title: data.title,
       date: data.date,
+      description: data.description,
       content,
     });
   });

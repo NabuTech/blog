@@ -3,6 +3,10 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import BlogCard from "../components/BlogCard";
 import '../styles/HomePage.css';
+import InfoCard from "../components/InfoCard";
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
+
 
 const HomePage = () => {
   const [blogPosts, setBlogPosts] = useState([]);
@@ -41,12 +45,43 @@ const HomePage = () => {
     <>
       <Header />
       <div className="home-page">
-        <h1 className="home-page-title">Articles</h1>
         <div className="container">
-            {blogPosts.map((post, index) => (
-                <BlogCard key={index} post={post} />
-            ))}
+          <InfoCard
+            title="About" id="about"
+            content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel ultricies massa. Donec non enim justo."
+          />
+          <InfoCard
+            title="Find Me Here" id="find-me"
+            content={
+              <div className="find-me">
+                <div className="icons">
+                <a className="icon" href="https://twitter.com/your_twitter">
+                  <i className="fab fa-twitter"></i>
+                  <span className="icon-name">Twitter</span>
+                </a>
+                <a className="icon" href="https://twitter.com/your_twitter">
+                  <i className="fab fa-linkedin"></i>
+                  <span className="icon-name">LinkedIn</span>
+                </a>
+                <a className="icon" href="https://twitter.com/your_twitter">
+                  <i className="fab fa-github"></i>
+                  <span className="icon-name">Github</span>
+                </a>
+                </div>
+                <div className="contact">
+                  <p>Contact me at <a className="contact-link" href="mailto:nabutech@proton.me">nabutech@proton.me</a></p>
+                </div>
+              </div>
+            }
+          />
         </div>
+        <div className="articles-list">
+            <h2 className="articles-title">Articles</h2>
+              {blogPosts.map((post, index) => (
+                <BlogCard key={index} post={post} />
+              ))}
+        </div>
+      
       </div>
       <Footer />
     </>
