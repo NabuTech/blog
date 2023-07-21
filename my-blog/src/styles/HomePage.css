@@ -8,13 +8,17 @@
 }
 
 
-  .container  {
-    box-sizing: border-box;
-    max-width: 1256px;
-    padding: 0 0 64px 0;
-    display: flex;
-    gap: 30px;
-    margin: 70px auto 0px;
+.container {
+  box-sizing: border-box;
+  max-width: 1256px;
+  padding: 0 16px; /* Adjust the padding for mobile */
+  display: flex;
+  gap: 30px;
+  margin: 70px auto 20px; /* Adjust the margin for normal view */
+}
+
+  .about {
+    position: relative;
   }
   
 
@@ -79,7 +83,6 @@
   }
 
   .articles-list {
-    margin-top: -50px;
     width: 100%;
     display: grid;
     gap: 30px;
@@ -91,3 +94,12 @@
     font-size: 28px;
     color: var(--color-light-background);
   }
+
+  @media (max-width: 767px) {
+    .container {
+    flex-direction: column; /* Stack the InfoCard elements in a column on mobile */
+    align-items: center; /* Center the elements on mobile */
+    gap: 20px; /* Adjust the gap between elements for mobile view */
+    margin-bottom: 20px;
+  }
+}
