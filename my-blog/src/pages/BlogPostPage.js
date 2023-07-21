@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { remark } from "remark";
 import html from "remark-html";
+import '../styles/BlogPostPage.css'
 
 const BlogPostPage = () => {
   const { postId } = useParams();
@@ -78,12 +79,17 @@ const BlogPostPage = () => {
   return (
     <>
       <Header />
-      <div className="container">
-        <h2>{blogPost.title}</h2>
-        <p>{formattedDate}</p>
+      <div className="blog-container">
+        <main className="main">
+        <p className="date">Published: {formattedDate}</p>
         <div className="blog-content">
-          <div className="blog-navigation">
-            <h3>Navigation</h3>
+          <article className="blog-post">
+            <MarkdownContent content={blogPost.content} />
+          </article>
+        </div>
+        </main>
+        <aside className="blog-navigation">
+            <h3>Table of Contents</h3>
             <ul>
               {subheadings.map((subheading) => (
                 <li key={subheading.slug}>
@@ -91,11 +97,7 @@ const BlogPostPage = () => {
                 </li>
               ))}
             </ul>
-          </div>
-          <div className="blog-post">
-            <MarkdownContent content={blogPost.content} />
-          </div>
-        </div>
+        </aside>
       </div>
       <Footer />
     </>
