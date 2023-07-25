@@ -1,10 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { remark } from "remark";
 import html from "remark-html";
-import '../styles/BlogPostPage.css'
+import rehypeSlug from "rehype-slug";
+import "../styles/BlogPostPage.css";
+
+const parseSubheadings = (content) => {
+  const subheadingsData = Array.from(content.matchAll(/##\s*(.+)$/gm));
+  if (subheadingsData) {
+    const subheadingsArray = subheadingsData.map((match, index) => {
+      const subheadingText = match[1];
+      const subheadingSlug = `subheading-${index}`;
+      return { text: subheadingText, slug: subheadingSlug };
+    });
+    return subheadingsArray;
+  }
+  return [];
+};
 
 const BlogPostPage = () => {
   const { postId } = useParams();
@@ -25,15 +39,13 @@ const BlogPostPage = () => {
         }
         setBlogPost(post);
 
-        // Parse subheadings from the content
-        const subheadingsData = post.content.match(/##\s(.+)/g);
-        if (subheadingsData) {
-          const subheadingsArray = subheadingsData.map((subheading) => {
-            const subheadingText = subheading.replace("## ", "");
-            const subheadingSlug = subheadingText.toLowerCase().replace(/\s/g, "-");
-            return { text: subheadingText, slug: subheadingSlug };
-          });
+        // Check if the 'content' field exists in the 'post' object
+        if (post.content) {
+          // Parse subheadings from the raw Markdown content
+          const subheadingsArray = parseSubheadings(post.content);
           setSubheadings(subheadingsArray);
+        } else {
+          console.warn("Blog post content is missing.");
         }
       } catch (error) {
         console.error("Error fetching blog post", error);
@@ -43,60 +55,88 @@ const BlogPostPage = () => {
     fetchBlogPostData();
   }, [postId]);
 
-  if (!blogPost) {
-    return <p>Loading...</p>; // Display a loading state while fetching the blog post data
-  }
-
-  // Format the date to display only the date without the time
-  const formattedDate = new Date(blogPost.date).toLocaleDateString();
-
-  // Render Markdown content using remark
   const renderMarkdown = async (content) => {
-    const result = await remark().use(html).process(content);
-    return result.toString();
+    const result = await remark().use(html).use(rehypeSlug).process(content);
+    const renderedContent = result.toString();
+
+    let updatedContent = renderedContent;
+
+    // Replace the subheadings in the rendered content with the correct anchor tags
+    subheadings.forEach((subheading) => {
+      const { text, slug } = subheading;
+      const anchorTag = `<h2 id="${slug}">${text}</h2>`;
+      updatedContent = updatedContent.replace(
+        new RegExp(`<h2>${text}</h2>`, "g"),
+        anchorTag
+      );
+    });
+
+    return updatedContent;
   };
-  
+
+  // Create a ref to store the DOM element of the currently active subheading
+  const activeSubheadingRef = useRef(null);
+
+  // Function to handle scrolling to the subheading
+  const scrollToSubheading = (e) => {
+    e.preventDefault();
+    const slug = e.currentTarget.getAttribute("href").slice(1);
+    const subheadingElement = document.getElementById(slug);
+    if (subheadingElement) {
+      const headerHeight = 60; // Height of the header in pixels
+      const scrollPosition = subheadingElement.offsetTop - headerHeight;
+      window.scrollTo({
+        top: scrollPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+
   const MarkdownContent = ({ content }) => {
     const [renderedContent, setRenderedContent] = useState(null);
-  
+
     useEffect(() => {
       const renderContent = async () => {
-        const markdown = await renderMarkdown(content);
-        setRenderedContent(markdown);
+        if (content) {
+          const markdown = await renderMarkdown(content);
+          setRenderedContent(markdown);
+        }
       };
-  
+
       renderContent();
     }, [content]);
-  
+
     if (!renderedContent) {
       return <p>Loading...</p>;
     }
-  
-    return <div dangerouslySetInnerHTML={{ __html: renderedContent }} />;
+
+    return (
+      <div ref={activeSubheadingRef} dangerouslySetInnerHTML={{ __html: renderedContent }} />
+    );
   };
-  
 
   return (
     <>
       <Header />
       <div className="blog-container">
         <main className="main">
-        <p className="date">Published: {formattedDate}</p>
-        <div className="blog-content">
-          <article className="blog-post">
-            <MarkdownContent content={blogPost.content} />
-          </article>
-        </div>
+          <div className="blog-content">
+            <article className="blog-post">
+              <MarkdownContent content={blogPost?.content} subheadings={subheadings} />
+            </article>
+          </div>
         </main>
         <aside className="blog-navigation">
-            <h3>Table of Contents</h3>
-            <ul>
-              {subheadings.map((subheading) => (
-                <li key={subheading.slug}>
-                  <a href={`#${subheading.slug}`}>{subheading.text}</a>
-                </li>
-              ))}
-            </ul>
+          <h3>Table of Contents</h3>
+          <ul>
+            {subheadings.map((subheading) => (
+              <li key={subheading.slug}>
+                <a href={`#${subheading.slug}`} onClick={scrollToSubheading}>
+                  {subheading.text}
+                </a>
+              </li>
+            ))}
+          </ul>
         </aside>
       </div>
       <Footer />
