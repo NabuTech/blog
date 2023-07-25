@@ -96,7 +96,7 @@
   .articles-title{
     line-height: 1.3;
     font-size: 28px;
-    color: var(--color-light-background);
+    color: var(--color-highlight);
   }
 
   @media (max-width: 767px) {
