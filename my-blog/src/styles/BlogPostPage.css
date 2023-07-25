@@ -42,10 +42,11 @@ h2 {
 }
 
 p {
-    font-size: 24px;
+    font-size: 20px;
     margin: 0 0 20px;
     line-height: 1.5;
     font-weight: normal;
+    color: var(--color-secondary);
 }
 
 aside {

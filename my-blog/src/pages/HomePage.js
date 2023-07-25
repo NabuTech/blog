@@ -48,7 +48,15 @@ const HomePage = () => {
         <div className="container">
           <InfoCard
             title="About" id="about"
-            content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vel ultricies massa. Donec non enim justo."
+            content="Back in 2021, after a successful career in hospitality management, 
+            amidst the turmoil caused by the COVID-19 pandemic, I found myself in a new 
+            country at a crossroads. Determined to embrace the opportunities presented 
+            by the technology industry, I immersed myself in the world of software 
+            development, pursuing a Software Development Diploma. Today, I continue to 
+            pursue my passion by working towards a bachelor's degree in IT and sharing my
+            journey and accomplishments through NabuTech.To learn more about the person 
+            behind NabuTech, please visit my LinkedIn 
+            profile."
           />
           <InfoCard
             title="Find Me Here" id="find-me"
