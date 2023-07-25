@@ -55,15 +55,15 @@ const HomePage = () => {
             content={
               <div className="find-me">
                 <div className="icons">
-                <a className="icon" href="https://twitter.com/your_twitter">
+                <a className="icon" href="https://twitter.com/nabu_tech">
                   <i className="fab fa-twitter"></i>
                   <span className="icon-name">Twitter</span>
                 </a>
-                <a className="icon" href="https://twitter.com/your_twitter">
+                <a className="icon" href="https://www.linkedin.com/in/sammyjohnrawlinson/">
                   <i className="fab fa-linkedin"></i>
                   <span className="icon-name">LinkedIn</span>
                 </a>
-                <a className="icon" href="https://twitter.com/your_twitter">
+                <a className="icon" href="https://github.com/NabuTech">
                   <i className="fab fa-github"></i>
                   <span className="icon-name">Github</span>
                 </a>
