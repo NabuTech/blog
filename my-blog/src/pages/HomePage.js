@@ -13,7 +13,7 @@ const HomePage = () => {
 
   const fetchBlogPostsData = async () => {
     try {
-      const response = await fetch("/data/output.json");
+      const response = await fetch("https://NabuTech.github.io/my-blog/data/output.json");
       console.log("Response Status:", response.status);
       if (!response.ok) {
         throw new Error("Error fetching blog posts");
