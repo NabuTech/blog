@@ -45,7 +45,7 @@ Under the following terms:
 Feel free to reach out if you have any questions, suggestions, or just want to connect!
 
 - **Email:** [nabutech@proton.me](mailto:nabutech@proton.me)
-- **Twitter:** [@YourTwitterHandle](https://twitter.com/YourTwitterHandle)
+- **Twitter:** [@nabu_tech](https://twitter.com/nabu_tech)
 
 I look forward to hearing from you!
 
